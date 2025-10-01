@@ -1,0 +1,132 @@
+.program-listing-items{padding-bottom: 50px;}
+.no-course-discovery .title-section h2{border-bottom: 8px solid #FFCB05;display: inline-block;padding-bottom: 10px;}
+.no-course-discovery .title-section p{padding-bottom: 20px;}
+.program-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.program-listing-items .program-item {
+    display: flex;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.program-listing-items .program-item .left-bar {
+    flex: 1;
+    max-width: 430px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.program-listing-items .program-item .left-bar img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-right: 1px solid #ddd;
+}
+
+.program-listing-items .program-item .right-bar {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.program-listing-items .program-item .title-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background: #6BCABA;
+    color: #262626;
+    padding: 10px 30px;
+}
+.program-listing-items .program-item .title-top h2{
+    margin: 0;
+}
+.program-listing-items .program-item .title-top .course-time {
+    display: flex;
+    align-items: center;
+    position: inherit;
+    background-color: #BF3C49;
+    position: relative;
+    top: 0;
+}
+
+.program-listing-items .program-item .course-duration {
+    font-weight: bold;
+    font-weight: bold;
+    padding: 5px 14px;
+}
+
+.program-listing-items .program-item .clock-icon {
+    position: absolute;
+    left: -20px;
+    width: 32px;
+}
+.program-listing-items .program-item .short-desc{
+    padding: 0 30px;
+}
+
+.program-listing-items .program-list .content-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    gap: 15px;
+}
+.program-listing-items .program-list .content-div ul{
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    overflow: hidden;
+    max-width: 650px;
+}
+.program-listing-items .program-list .content-div ul li span{
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+}
+.program-listing-items .program-list .content-div ul li span a{
+    background: #e6e1e1;
+    color: #000 !important;
+    padding: 0 10px;
+}
+.program-listing-items .program-list .content-div ul li span a:hover, 
+.program-listing-items .program-list .content-div ul li span a:focus{
+    background: #d4d0d0;
+    text-decoration: none;
+}
+.program-listing-items .program-list .content-div p {
+    margin: 0;
+    max-width: 80%;
+}
+
+.program-listing-items .program-list .content-div a.program-btn {
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    background: #FFCB05;
+    border: none;
+    text-decoration: none;
+    color: #262626;
+    font-family: 'TheSansArabic';
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 530;
+    padding: 10px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.program-listing-items .program-list .content-div a.program-btn:hover, 
+.program-listing-items .program-list .content-div a.program-btn:focus{
+    background: #6BCABA;
+    color: #262626;
+    border: none;
+    text-decoration: none;
+}

@@ -1,0 +1,320 @@
+#dashboard-main {
+    display: block;
+    background: #fff;
+}
+
+.enrollment-sections {
+    display: block;
+    width: 100%;
+    padding: 40px 0 15px;
+
+}
+.enrolled-programs {
+    padding-bottom: 70px;
+}
+.title-section h2 {
+    border-bottom: 8px solid #FFCB05;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.title-section p {
+    padding-bottom: 20px;
+}
+
+.enrolled-programs h3,
+.enrolled-courses h3 {
+    padding-bottom: 30px;
+}
+
+.program-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.program-item {
+    display: flex;
+    background-color: #fff;
+    overflow: hidden;
+    align-items: stretch;
+    border: 1px solid;
+}
+
+.program-item .left-bar {
+    flex: 1;
+    max-width: 430px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.program-item .right-bar {
+    flex: 2;
+}
+
+.program-item .left-bar img {
+    width: 100%;
+    height: 100%;
+    object-position: top;
+}
+
+.program-item .title-top {
+    display: block;
+    background: #6BCABA;
+    color: #262626;
+    padding: 10px 30px;
+}
+
+.program-item .title-top h2 {
+    margin: 0;
+    font-size: 29px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.program-item .content-div {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    gap: 80px;
+}
+
+.program-progress {
+    flex: 1;
+    max-width: 430px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes progress {
+    0% {
+        --percentage: 0;
+    }
+
+    100% {
+        --percentage: var(--value);
+    }
+}
+
+@property --percentage {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+}
+
+[role="progressbar"] {
+    --percentage: var(--value);
+    --primary: #346A67;
+    --secondary: #dedddd;
+    --size: 170px;
+    animation: progress 2s 0.5s forwards;
+    width: var(--size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+}
+
+[role="progressbar"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(var(--primary) calc(var(--percentage) * 1%), var(--secondary) 0);
+    mask: radial-gradient(white 55%, transparent 0);
+    mask-mode: alpha;
+    -webkit-mask: radial-gradient(#0000 55%, #000 0);
+    -webkit-mask-mode: alpha;
+}
+
+[role="progressbar"]::after {
+    counter-reset: percentage var(--value);
+    content: counter(percentage) '%';
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: calc(var(--size) / 5);
+    color: var(--primary);
+}
+
+.content-div .courses {
+    display: block;
+    float: none;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 10px;
+}
+
+.course-item .course-info {
+    font-size: 16px;
+    color: #333;
+    position: relative;
+    padding: 0 20px;
+    background: #dedddd;
+}
+.course-item .course-info a,
+.course-item .course-info a:hover,
+.course-item .course-info a:focus{
+    color: #333;
+    text-decoration: none;
+}
+.course-info::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background-color: #fff;
+}
+
+body.rtl .course-info::before {
+    left: inherit;
+    right: 0;
+}
+
+.completed .course-info::before {
+    background-color: #346A67;
+}
+
+.in-progress .course-info::before {
+    background-color: orange;
+}
+
+.progress-circle {
+    position: relative;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
+.progress-circle:before {
+    position: absolute;
+    content: '';
+    height: calc(100% - 12px);
+    width: calc(100% - 12px);
+    top: 3px;
+    left: 3px;
+    border-radius: inherit;
+}
+
+.progress-circle.in-progress {
+    background-color: orange;
+}
+
+.progress-circle.in-progress:before {
+    border: 3px dashed #fff;
+}
+
+.progress-circle.not-started {
+    background-color: #dedddd;
+}
+
+.progress-circle.not-started:before {
+    border: 3px dashed gray;
+}
+
+.progress-circle.completed {
+    background-color: #346A67;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-circle.completed:before {
+    border: 3px solid #fff;
+}
+
+.check-icon {
+    color: white;
+    font-size: 16px;
+}
+
+.courses-container .courses .courses-listing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.courses-container .courses .courses-listing .courses-listing-item {
+    max-height: 476px;
+}
+.courses-container .courses .course .course-info {
+    gap: 0;
+    height: auto;
+        padding: 16px 32px;
+        border: none;
+}
+.courses-container .courses .course{
+    border: 1px solid var(--grey, #5B6770);
+}
+
+
+.course-progress-bar .progress-container {
+    background-color: #f3f3f3;
+    height: 25px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-progress-bar .progress {
+    background-color: #346A67;
+    height: 100%;
+    width: var(--progress-value); /* Dynamically set progress value */
+    position: relative;
+}
+.course-progress-bar.in-progress .progress {
+    background-color: orange;
+}
+.course-progress-bar .progress-label {
+    position: absolute;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+.courses-container .courses .course a:hover,
+.courses-container .courses .course a:focus{
+    text-decoration: none !important;
+}
+@media (min-width: 768px) {
+    .courses-container {
+        padding: 0;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 980px) {
+    .courses-container .courses .courses-listing .courses-listing-item {
+        width: 405px;
+        margin: 0;
+        float: left;
+        display: block;
+        padding-bottom: 35px;
+    }
+
+    .courses-container .courses .courses-listing .courses-listing-item:last-child {
+        margin-right: 0;
+
+    }
+
+    .courses-container .courses .courses-listing .courses-listing-item:nth-child(4n+1) {
+        clear: left;
+        width: 405px;
+        margin: 0;
+        float: left;
+        display: block;
+    }
+}

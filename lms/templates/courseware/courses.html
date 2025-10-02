@@ -74,47 +74,60 @@
                         </div>
                         <div class="program-list">
                             % for program in active_programs:
-                                <div class="program-item">
-                                    <div class="item-content left-bar">
-                                        <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
-                                            <img src="${program.card.url}" alt="${program.name} Image" />
-                                        </a>  
-                                    </div>
-                                    <div class="item-content right-bar">
-                                        <div class="title-top">
-                                            <h2>${program.name}</h2>
-                                            <div class="course-time">
-                                                <span class="course-duration">'${program.duration if program.duration else ''}</span>
-                                                <img src="${static.url('images/time.png')}" alt="Course Duration" class="clock-icon">
-                                            </div>
-                                        </div>
+                         <div class="program-item" style="--program-color: ${program.css_color if program.css_color else '#007bff'};">
+    <div class="item-content left-bar">
+        <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
+            <img src="${program.card.url}" alt="${program.name} Image" />
+        </a>  
+    </div>
 
-                                        <div class="item-content-image">
-                                            <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
-                                                <img src="${program.card.url}" alt="${program.name} Image" />
-                                            </a>  
-                                        </div>
+    <div class="item-content right-bar">
+        <div class="title-top">
+            <h2>${program.name}</h2>
 
+            % if program.age_range:
+                <span class="age-range">Age: ${program.get_age_range_display()}</span>
+            % endif
 
-                                        <p class="short-desc">${program.short_description}</p>
-                                        <div class="content-div">
-                                            <ul class="program-courses">
-                                                % for course in program.courses.all():
-                                                    <li>
-                                                        <span>
-                                                            <a href="${reverse('about_course', args=[text_type(course.course_key)])}">${course.name}</a>
-                                                        </span>
-                                                    </li>
-                                                % endfor
-                                            </ul>
-                                            % if ProgramEnrollment.is_enrolled(request.user, program.id):
-                                                <a class="program-btn" href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">انت مسجل في المسار</a>
-                                            % else:
-                                                <a class="program-btn" href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">التسجيل في المسار</a>
-                                            % endif
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="course-time">
+                <span class="course-duration">${program.duration if program.duration else ''}</span>
+                <img src="${static.url('images/time.png')}" alt="Course Duration" class="clock-icon">
+            </div>
+        </div>
+
+        <div class="item-content-image">
+            <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
+                <img src="${program.card.url}" alt="${program.name} Image" />
+            </a>  
+        </div>
+
+        % if program.spline_url:
+        <div class="spline-container">
+            <iframe src="${program.spline_url}" frameborder="0" width="100%" height="400" style="border:none;"></iframe>
+        </div>
+        % endif
+
+        <p class="short-desc">${program.short_description}</p>
+
+        <div class="content-div">
+            <ul class="program-courses">
+                % for course in program.courses.all():
+                    <li>
+                        <span>
+                            <a href="${reverse('about_course', args=[text_type(course.course_key)])}">${course.name}</a>
+                        </span>
+                    </li>
+                % endfor
+            </ul>
+
+            <a class="program-btn"
+               href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
+               ${'انت مسجل في المسار' if ProgramEnrollment.is_enrolled(request.user, program.id) else 'التسجيل في المسار'}
+            </a>
+        </div>
+    </div>
+</div>
+
                             % endfor
                         </div>
                     </div>

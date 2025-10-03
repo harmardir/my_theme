@@ -64,14 +64,6 @@
             <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
                 % if active_programs:
                     <div class="program-listing-items">
-                        <div class="title-section">
-                            <h2>المسارات</h2>
-                            <p>
-                                
-                                المسارات مصممة لمختلف الفئات، وتزوّد المشاركين بالمعرفة والمهارات اللازمة لدعم دمج الأشخاص ذوي الإعاقة في بيئة العمل. 
-                            
-                            </p>
-                        </div>
                         <div class="program-list">
                             % for program in active_programs:
                          <div class="program-item" style="--program-color: ${program.css_color if program.css_color else '#007bff'};">
@@ -81,7 +73,9 @@
         </a>  
     </div>
 
-    <div class="item-content right-bar">
+   <div class="item-content right-bar"
+         style="background-color: ${program.css_color if program.css_color else '#f5f5f5'};">
+         
         <div class="title-top">
             <h2>${program.name}</h2>
 
@@ -132,21 +126,6 @@
                         </div>
                     </div>
                 % endif
-                <div class="title-section">
-                    <h2>الدورات التدريبية</h2>
-                    <p>
-                        
-                        الدورات تعلّم مفاهيم أساسية لكل من يسعى لدعم الشمولية وتمكين الأشخاص ذوي الإعاقة ضمن بيئة العمل. 
-                    
-                    </p>
-                </div>
-                <ul class="courses-listing courses-list">
-                    %for course in courses:
-                        <li class="courses-listing-item">
-                            <%include file="../course.html" args="course=course" />
-                        </li>
-                    %endfor
-                </ul>
             </div>
 
             % if course_discovery_enabled:

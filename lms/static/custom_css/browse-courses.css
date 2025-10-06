@@ -1,132 +1,173 @@
-.program-listing-items{padding-bottom: 50px;}
-.no-course-discovery .title-section h2{border-bottom: 8px solid #FFCB05;display: inline-block;padding-bottom: 10px;}
-.no-course-discovery .title-section p{padding-bottom: 20px;}
-.program-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.program-listing-items .program-item {
-    display: flex;
-    background-color: #fff;
-    overflow: hidden;
+.find-courses,
+.courses-container,
+.courses {
+  background: #0c1b36 !important; /* Dark navy background */
+  direction: rtl;
+  text-align: center;
+  font-family: 'Cairo', 'TheSansArabic', sans-serif;
+  margin: 0;
+  padding: 40px 0;
+  color: #fff;
 }
 
-.program-listing-items .program-item .left-bar {
-    flex: 1;
-    max-width: 430px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Section Title */
+.program-section .title-section {
+  margin-bottom: 20px;
 }
 
-.program-listing-items .program-item .left-bar img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-right: 1px solid #ddd;
+.program-section .title-section h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.program-listing-items .program-item .right-bar {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.program-tabs {
+  text-align: center;
+  margin: 20px 0 40px 0;
 }
 
-.program-listing-items .program-item .title-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    background: #6BCABA;
-    color: #262626;
-    padding: 10px 30px;
-}
-.program-listing-items .program-item .title-top h2{
-    margin: 0;
-}
-.program-listing-items .program-item .title-top .course-time {
-    display: flex;
-    align-items: center;
-    position: inherit;
-    background-color: #BF3C49;
-    position: relative;
-    top: 0;
+.tab-list {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 40px;
 }
 
-.program-listing-items .program-item .course-duration {
-    font-weight: bold;
-    font-weight: bold;
-    padding: 5px 14px;
+.tab-list .tab {
+  padding: 10px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #aaa;
+  transition: all 0.3s;
+  font-size: 16px;
+  position: relative;
 }
 
-.program-listing-items .program-item .clock-icon {
-    position: absolute;
-    left: -20px;
-    width: 32px;
-}
-.program-listing-items .program-item .short-desc{
-    padding: 0 30px;
+.tab-list .tab.active {
+  color: #fff;
 }
 
-.program-listing-items .program-list .content-div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    gap: 15px;
-}
-.program-listing-items .program-list .content-div ul{
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
-    overflow: hidden;
-    max-width: 650px;
-}
-.program-listing-items .program-list .content-div ul li span{
-    display: inline-flex;
-    align-items: center;
-    font-size: 14px;
-}
-.program-listing-items .program-list .content-div ul li span a{
-    background: #e6e1e1;
-    color: #000 !important;
-    padding: 0 10px;
-}
-.program-listing-items .program-list .content-div ul li span a:hover, 
-.program-listing-items .program-list .content-div ul li span a:focus{
-    background: #d4d0d0;
-    text-decoration: none;
-}
-.program-listing-items .program-list .content-div p {
-    margin: 0;
-    max-width: 80%;
+.tab-list .tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: #FFFF; 
+  border-radius: 2px;
 }
 
-.program-listing-items .program-list .content-div a.program-btn {
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    background: #FFCB05;
-    border: none;
-    text-decoration: none;
-    color: #262626;
-    font-family: 'TheSansArabic';
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 530;
-    padding: 10px 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.program-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
-.program-listing-items .program-list .content-div a.program-btn:hover, 
-.program-listing-items .program-list .content-div a.program-btn:focus{
-    background: #6BCABA;
-    color: #262626;
-    border: none;
-    text-decoration: none;
+.program-card {
+  flex: 1 1 28%;
+  max-width: 415px;
+  height: 558px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+  display: flex;
+  align-items: flex-end;
+  background: #111;
+  transition: transform 0.3s ease;
 }
+
+.program-card:hover {
+  transform: translateY(-6px);
+}
+
+.spline-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.spline-bg iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 20px;
+}
+
+.program-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 20px;
+  color: #fff;
+}
+
+/* Age Badge */
+.age-badge {
+  display: inline-block;
+  background: #7A4FFF;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* Title */
+.program-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Description */
+.program-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0 20px;
+  color: #ddd;
+}
+
+/* Yellow CTA Button */
+.program-btn {
+  background: #FFCB05;
+  color: #000 !important;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  display: inline-block;
+}
+
+.program-btn:hover {
+  background: #ffffff;
+}
+.window-wrap {
+    background: #0c1b36;
+}
+header.global-header {
+    background-color: #110D7C;
+}
+.wrapper.wrapper-footer {
+    background-color: #0c1b36;
+}
+a.program-btn {
+    background-color: #0c1b36;
+}
+h1 {
+    color: white;
+}
+.global-header .nav-links .main .nav-tab a {
+     color: white;
+    
+}
+.global-header .nav-links .secondary .nav-item a
+ {
+        color: white;
+ }

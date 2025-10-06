@@ -15,126 +15,96 @@
 %>
 <%namespace name='static' file='../static_content.html'/>
 
-% if course_discovery_enabled:
-<%block name="header_extras">
-  % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option"]:
-  <script type="text/template" id="${template_name}-tpl">
-      <%static:include path="discovery/${template_name}.underscore" />
-  </script>
-  % endfor
-  <%static:require_module module_name="js/discovery/discovery_factory" class_name="DiscoveryFactory">
-    DiscoveryFactory(
-      ${course_discovery_meanings | n, dump_js_escaped_json},
-      getParameterByName('search_query'),
-      "${user_language | n, js_escaped_string}",
-      "${user_timezone | n, js_escaped_string}"
-    );
-  </%static:require_module>
-</%block>
-% endif
-
 <%block name="pagetitle">${_("Courses")}</%block>
 <%block name="headextra">
     <link rel="stylesheet" type="text/css" href="${static.url('custom_css/browse-courses.css')}">
 </%block>
-<main id="main" aria-label="Content" tabindex="-1">
+
+<main id="main" aria-label="Content" tabindex="-1" dir="rtl">
     <section class="find-courses">
         <section class="courses-container">
-            % if course_discovery_enabled:
-                <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
-                    <div id="discovery-message" class="search-status-label"></div>
-                    <form class="wrapper-search-input">
-                        <label for="discovery-input" class="sr">${_('Search for a course')}</label>
-                        <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
-                        <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
-                            <span class="icon fa fa-search" aria-hidden="true"></span>
-                            <div aria-live="polite" aria-relevant="all">
-                                <div id="loading-indicator" class="loading-spinner hidden">
-                                    <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
-                                    <span class="sr">${_('Loading')}</span>
+
+            <div class="courses no-course-discovery">
+                
+                % if active_programs:
+                <div class="program-section">
+
+                    <div class="title-section">
+                        <h1>المغامرات في البرنامج</h1>
+                    </div>
+
+                    <div class="program-tabs">
+                        <ul class="tab-list">
+                            <li class="tab active" data-tab="all">كل الأعمار</li>
+                            <li class="tab" data-tab="15-18">١٥–١٨ سنة</li>
+                            <li class="tab" data-tab="19-25">١٩–٢٥ سنة</li>
+                        </ul>
+                    </div>
+
+                    <!-- Program Cards -->
+                    <div class="program-cards">
+                        % for program in active_programs:
+                            <%
+                                age = getattr(program, "age_group", "15-18")
+                                if age == "15-18":
+                                    age_label = "١٥–١٨ سنة"
+                                elif age == "19-25":
+                                    age_label = "١٩–٢٥ سنة"
+                                else:
+                                    age_label = "كل الأعمار"
+                            %>
+                            <div class="program-card" data-age="${age}">
+                                <!-- Background with Spline -->
+                                <div class="spline-bg">
+                                  % if program.name == "المرحلة الاولى":
+                                    <iframe src='https://my.spline.design/hands3duicopy-7gyoxesQffZHhLfjeK9Il4p0/' frameborder='0'></iframe>
+                                  % elif program.name == "المرحلة الثانية":
+                                    <iframe src='https://my.spline.design/3dtextbluecopy-Jp7uaBn9JsoMwQv3dEwO2QJQ/' frameborder='0'></iframe>
+                                  % elif program.name == "المرحلة الثالثة":
+                                    <iframe src='https://my.spline.design/planetcopy-VE3Vwhawyvd06rBgG4YtES3f/' frameborder='0'></iframe>
+                                  % else:
+                                    <iframe src="https://my.spline.design/defaultscene-id/" frameborder="0"></iframe>
+                                  % endif
+                                </div>
+
+                                <!-- Card Content -->
+                                <div class="program-content">
+                                  <span class="age-badge">${age_label}</span>
+                                  <h3 class="program-title">${program.name}</h3>
+                                  <p class="program-desc">هذا الوصف هو مثال قصير للبرنامج. يمكنك تعديله من لوحة التحكم.</p>
+                                  <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}" class="program-btn">
+                                      % if ProgramEnrollment.is_enrolled(request.user, program.id):
+                                          أكمل الرحلة
+                                      % else:
+                                          اكتشف المزيد
+                                      % endif
+                                  </a>
                                 </div>
                             </div>
-                        </button>
-                    </form>
-                </div>
-                <div id="filter-bar" class="filters hide-phone is-collapsed">
-                </div>
-            % endif
-
-            <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
-                % if active_programs:
-                    <div class="program-listing-items">
-                        <div class="program-list">
-                            % for program in active_programs:
-                         <div class="program-item" style="--program-color: ${program.css_color if program.css_color else '#007bff'};">
-    <div class="item-content left-bar">
-        <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
-            <img src="${program.card.url}" alt="${program.name} Image" />
-        </a>  
-    </div>
-
-   <div class="item-content right-bar"
-         style="background-color: ${program.css_color if program.css_color else '#f5f5f5'};">
-         
-        <div class="title-top">
-            <h2>${program.name}</h2>
-
-            % if program.age_range:
-                <span class="age-range">Age: ${program.get_age_range_display()}</span>
-            % endif
-
-            <div class="course-time">
-                <span class="course-duration">${program.duration if program.duration else ''}</span>
-                <img src="${static.url('images/time.png')}" alt="Course Duration" class="clock-icon">
-            </div>
-        </div>
-
-        <div class="item-content-image">
-            <a href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
-                <img src="${program.card.url}" alt="${program.name} Image" />
-            </a>  
-        </div>
-
-        % if program.spline_url:
-        <div class="spline-container">
-            <iframe src="${program.spline_url}" frameborder="0" width="100%" height="400" style="border:none;"></iframe>
-        </div>
-        % endif
-
-        <p class="short-desc">${program.short_description}</p>
-
-        <div class="content-div">
-            <ul class="program-courses">
-                % for course in program.courses.all():
-                    <li>
-                        <span>
-                            <a href="${reverse('about_course', args=[text_type(course.course_key)])}">${course.name}</a>
-                        </span>
-                    </li>
-                % endfor
-            </ul>
-
-            <a class="program-btn"
-               href="${reverse('custom_programs:program_about', args=[text_type(program.id)])}">
-               ${'انت مسجل في المسار' if ProgramEnrollment.is_enrolled(request.user, program.id) else 'التسجيل في المسار'}
-            </a>
-        </div>
-    </div>
-</div>
-
-                            % endfor
-                        </div>
+                        % endfor
                     </div>
+                </div>
                 % endif
             </div>
-
-            % if course_discovery_enabled:
-                <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
-                    <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
-                    <section class="search-facets-lists">
-                    </section>
-                </aside>
-            % endif
         </section>
     </section>
 </main>
+
+<script>
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", function() {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      this.classList.add("active");
+
+      const filter = this.dataset.tab;
+      document.querySelectorAll(".program-card").forEach(card => {
+        const age = card.dataset.age;
+        if (filter === "all" || age === filter) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
